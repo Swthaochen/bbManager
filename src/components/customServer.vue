@@ -1,18 +1,15 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div>
+    客服中心
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+    
 }
 </script>
 
 <style>
-body{
-  margin: 0
-}
 
 </style>

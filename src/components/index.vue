@@ -24,7 +24,7 @@
             <i class="el-icon-service"></i>
             <span slot="title">客服中心</span>
         </el-menu-item>
-        <el-menu-item index="5">
+        <el-menu-item index="finance">
             <i class="el-icon-sold-out"></i>
             <span slot="title">财务中心</span>
         </el-menu-item>
@@ -35,7 +35,6 @@
         </el-menu>
     </el-col>
     <el-col :span="20">
-       <div>{{$route.query.name}}</div>
         <router-view></router-view>
     </el-col>
     </div>
