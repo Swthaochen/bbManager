@@ -2,7 +2,7 @@
     <div class="header_container">
 
 		<el-breadcrumb separator="/">
-			<el-breadcrumb-item >首页</el-breadcrumb-item>
+			<el-breadcrumb-item >帮帮后台管理</el-breadcrumb-item>
 		</el-breadcrumb>
 		<el-dropdown menu-align='start'>
 			<div class="avator">
