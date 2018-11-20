@@ -6,6 +6,11 @@ import finance from '@/components/finance'
 import emergency from '@/components/emergency'
 import statistical from '@/components/statistical'
 import coupons from '@/components/coupons'
+import notHandle from '@/components/notHandled'
+import haveHandled from '@/components/haveHandled'
+import configPermise from '@/components/configPermise'
+import secondManeger from '@/components/secondManeger'
+import localManeger from '@/components/localManeger'
 
 Vue.use(Router)
 
@@ -21,10 +26,22 @@ export default new Router({
       name: 'index',
       component: index,
       children: [
-        {
+       {
           path: '/finance',
           name: 'finance',
-          component: finance
+          component:finance,
+          children:[
+            {
+              path:'/finance',
+              name:'',
+              component:notHandle
+            },
+            {
+              path:'/haveHandled',
+              name:'haveHandled',
+              component:haveHandled
+            }
+          ]
         },
         {
           path: '/statistical',
@@ -40,6 +57,22 @@ export default new Router({
           path: '/coupons',
           name: 'coupons',
           component: coupons
+        },
+        {
+          path: '/configPermise',
+          name: 'configPermise',
+          component:configPermise,
+          children:[
+            {
+              path:'/configPermise',
+              name:'secondManeger',
+              component:secondManeger
+            },{
+              path:'/localManeger',
+              name:'localManeger',
+              component:localManeger
+            }
+          ]
         }
       ]
     }

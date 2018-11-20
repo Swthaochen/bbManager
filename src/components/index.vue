@@ -28,7 +28,7 @@
             <i class="el-icon-sold-out"></i>
             <span slot="title">财务中心</span>
         </el-menu-item>
-        <el-menu-item index="6">
+        <el-menu-item index="configPermise">
             <i class="el-icon-setting"></i>
             <span slot="title">权限配置</span>
         </el-menu-item>
@@ -62,5 +62,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>
