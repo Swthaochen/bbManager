@@ -1,6 +1,6 @@
 <template>
   <div>
-    优惠券
+    优惠券aaaaa
   </div>
 </template>
 
