@@ -36,6 +36,7 @@
     </el-col>
     <el-col :span="20">
         <header-top></header-top>
+        <router-view></router-view>
     </el-col>
     </div>
 </template>
