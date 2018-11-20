@@ -12,19 +12,19 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path:'/',
-      name:'login',
-      component:login
+      path: '/',
+      name: 'login',
+      component: login
     },
     {
       path: '/index',
       name: 'index',
       component: index,
-      children:[
+      children: [
         {
           path: '/finance',
           name: 'finance',
-          component:finance
+          component: finance
         },
         {
           path: '/statistical',
@@ -38,7 +38,7 @@ export default new Router({
         },
         {
           path: '/coupons',
-          name:'coupons',
+          name: 'coupons',
           component: coupons
         }
       ]
