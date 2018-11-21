@@ -6,7 +6,7 @@
     </el-menu>
     <el-table
         :data="tableData3"
-        height="250"
+        height="400"
         border
         stripe
         style="width: 100%">
