@@ -11,6 +11,9 @@ import haveHandled from '@/components/haveHandled'
 import configPermise from '@/components/configPermise'
 import secondManeger from '@/components/secondManeger'
 import localManeger from '@/components/localManeger'
+import customServer from '@/components/customServer'
+import customHandle from '@/components/customHandle'
+import customDone from '@/components/customDone'
 
 Vue.use(Router)
 
@@ -71,6 +74,21 @@ export default new Router({
               path:'/localManeger',
               name:'localManeger',
               component:localManeger
+            }
+          ]
+        },{
+          path: '/customServer',
+          name: 'customServer',
+          component: customServer,
+          children:[
+            {
+              path:'/customServer',
+              name:'customHandle',
+              component:customHandle
+            },{
+              path:'/customDone',
+              name:'customDone',
+              component:customDone
             }
           ]
         }

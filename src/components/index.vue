@@ -20,7 +20,7 @@
             <i class="el-icon-document"></i>
             <span slot="title">优惠券</span>
         </el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item index="customServer">
             <i class="el-icon-service"></i>
             <span slot="title">客服中心</span>
         </el-menu-item>
