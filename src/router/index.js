@@ -29,20 +29,20 @@ export default new Router({
       name: 'index',
       component: index,
       children: [
-       {
+        {
           path: '/finance',
           name: 'finance',
-          component:finance,
-          children:[
+          component: finance,
+          children: [
             {
-              path:'/finance',
-              name:'',
-              component:notHandle
+              path: '/finance',
+              name: '',
+              component: notHandle
             },
             {
-              path:'/haveHandled',
-              name:'haveHandled',
-              component:haveHandled
+              path: '/haveHandled',
+              name: 'haveHandled',
+              component: haveHandled
             }
           ]
         },
@@ -64,16 +64,17 @@ export default new Router({
         {
           path: '/configPermise',
           name: 'configPermise',
-          component:configPermise,
-          children:[
+          component: configPermise,
+          children: [
             {
-              path:'/configPermise',
-              name:'secondManeger',
-              component:secondManeger
-            },{
-              path:'/localManeger',
-              name:'localManeger',
-              component:localManeger
+              path: '/configPermise',
+              name: 'secondManeger',
+              component: secondManeger
+            },
+            {
+              path: '/localManeger',
+              name: 'localManeger',
+              component: localManeger
             }
           ]
         },{
