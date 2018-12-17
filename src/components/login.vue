@@ -32,7 +32,7 @@
         },
         methods:{
             go(){
-				this.http.post('https://bang.zhengsj.top/login/admin',{
+				this.$axios.post('https://bang.zhengsj.top/login/admin',{
 					adminName: this.username,
 					password: this.password
 				}).then(res => console.log(res))

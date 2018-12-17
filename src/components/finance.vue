@@ -15,11 +15,7 @@ export default {
     return {
         activeIndex:'finance',
     }
-<<<<<<< HEAD
   }
-=======
-}
->>>>>>> f68702909356cfb88b8af6dbab4ffa5eb41d93d8
 }
 </script>
 
