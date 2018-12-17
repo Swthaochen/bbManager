@@ -36,6 +36,9 @@
 					adminName: this.username,
 					password: this.password
 				}).then(res => console.log(res))
+				.then((res)=>{
+					console.log(res)
+				})
                 // this.$router.push('/statistical')
             }
         }
