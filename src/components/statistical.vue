@@ -16,6 +16,7 @@
           :value="item.value">
         </el-option>
       </el-select>
+      <el-button @click="search">查询结果</el-button>
     </div>
     <div class="cards" @click="test">
       <el-card shadow="hover">
@@ -40,11 +41,17 @@
 
 <script>
 import {test} from '../API/API'
+function setCookie(key, value, iDay) {
+    var oDate = new Date();
+    oDate.setDate(oDate.getDate() + iDay);
+    document.cookie = key + '=' + value + ';expires=' + oDate;
+}
 export default {
   data() {
     return {
       date: '',
       school: '',
+      cookie: '',
       schools: [{
           value: '选项1',
           label: '西安电子科技大学'
@@ -70,7 +77,26 @@ export default {
       test(this).then((res)=>{
         console.log(res)
       })
+    },
+    search(){
+      let date1 = new Date(this.date[0]) 
+      let date1_value=`${date1.getFullYear()}${(date1.getMonth() + 1)}${date1.getDate()}`
+      let date2 = new Date(this.date[1]) 
+      let date2_value=`${date2.getFullYear()}${(date2.getMonth() + 1)}${date2.getDate()}`
+      this.$axios({
+        url: `https://bang.zhengsj.top/admin/statistics/viewConcreteInfo/${date1_value}/${date2_value}`,
+        methods: 'GET',
+        headers: {
+          cookie: this.cookie
+        },
+        withCredentials: true
+      }).then(res=>console.log(res))
     }
+  },
+  created(){
+    this.cookie = sessionStorage.getItem('cookie')
+    this.cookie = this.cookie.split('=')[1]
+    setCookie('token',this.cookie)
   }
 }
 </script>
