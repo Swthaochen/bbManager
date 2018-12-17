@@ -35,11 +35,12 @@
 				this.$axios.post('https://bang.zhengsj.top/login/admin',{
 					adminName: this.username,
 					password: this.password
-				}).then(res => console.log(res))
-				.then((res)=>{
-					console.log(res)
+				}).then(res => {
+					sessionStorage.setItem('cookie',res.data.data)
+					if(res.status == 200) {
+						this.$router.push('/statistical')
+					}
 				})
-                // this.$router.push('/statistical')
             }
         }
 	}
