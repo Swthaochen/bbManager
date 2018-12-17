@@ -2,7 +2,7 @@
   <div>
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" router>
         <el-menu-item index="configPermise">二级管理员</el-menu-item>
-        <el-menu-item index="localManeger">区域管理员</el-menu-item>
+        <el-menu-item index="localManeger">区域负责人</el-menu-item>
         <el-button
             class="addBnt"
             type="primary" plain
@@ -25,12 +25,6 @@
               <el-input v-model="form.clu_loc"></el-input>
           </el-form-item>
           <el-form-item label="确认密码">
-              <el-input v-model="form.clu_year"></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱">
-              <el-input v-model="form.clu_year"></el-input>
-          </el-form-item>
-          <el-form-item label="微信">
               <el-input v-model="form.clu_year"></el-input>
           </el-form-item>
     </el-form>
