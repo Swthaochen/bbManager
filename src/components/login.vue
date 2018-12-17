@@ -3,14 +3,14 @@
 	  	<transition name="form-fade" mode="in-out">
 	  		<section class="form_contianer">
 		  		<div class="manage_tip">
-		  			<p>elm后台管理系统</p>
+		  			<p>后台管理系统</p>
 		  		</div>
-		    	<el-form :model="loginForm" :rules="rules" ref="loginForm">
-					<el-form-item prop="username">
-						<el-input placeholder="用户名"></el-input>
+		    	<el-form>
+					<el-form-item>
+						<el-input v-model="username" placeholder="用户名"></el-input>
 					</el-form-item>
-					<el-form-item prop="password">
-						<el-input type="password" placeholder="密码"></el-input>
+					<el-form-item>
+						<el-input v-model="password" type="password" placeholder="密码"></el-input>
 					</el-form-item>
 					<el-form-item>
 				    	<el-button @click="go" type="primary" class="submit_btn">登陆</el-button>
@@ -25,24 +25,18 @@
 	export default {
 	    data(){
 			return {
-				loginForm: {
-					username: '',
-					password: '',
-				},
-				rules: {
-					username: [
-			            { required: true, message: '请输入用户名', trigger: 'blur' },
-			        ],
-					password: [
-						{ required: true, message: '请输入密码', trigger: 'blur' }
-					],
-				},
+				username: '',
+				password: '',
 				showLogin: false,
 			}
         },
         methods:{
             go(){
-                this.$router.push('/statistical')
+				this.$axios.post('https://bang.zhengsj.top/login/admin',{
+					adminName: this.username,
+					password: this.password
+				}).then(res => console.log(res))
+                // this.$router.push('/statistical')
             }
         }
 	}

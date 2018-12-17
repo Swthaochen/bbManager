@@ -15,6 +15,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+<<<<<<< HEAD
+    "axois": "^1.0.0",
+=======
+>>>>>>> f68702909356cfb88b8af6dbab4ffa5eb41d93d8
     "element-ui": "^2.4.10",
     "qs": "^6.6.0",
     "vue": "^2.5.2",
