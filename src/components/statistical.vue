@@ -17,7 +17,7 @@
         </el-option>
       </el-select>
     </div>
-    <div class="cards">
+    <div class="cards" @click="test">
       <el-card shadow="hover">
         <i class="el-icon-info"> 待配送订单</i>
         <div class="info">123</div>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import {test} from '../API/API'
 export default {
   data() {
     return {
@@ -63,6 +64,13 @@ export default {
     }
   },
   components:{
+  },
+  methods:{
+    test(){
+      test(this).then((res)=>{
+        console.log(res)
+      })
+    }
   }
 }
 </script>
