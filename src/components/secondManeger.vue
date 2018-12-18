@@ -2,27 +2,23 @@
     <div>
         <template>
             <el-table
-                :data="tableData"
+                :data="adminList"
                 style="width: 100%">
                 <el-table-column
+                width='100'
                 type="index">
                 </el-table-column>
                 <el-table-column
-                width='200'
-                prop="weChat"
+                width='250'
+                prop="adminId"
                 label="账号">
                 </el-table-column>
                 <el-table-column
-                prop="phone"
+                prop="adminPhone"
                 label="电话">
                 </el-table-column>
                 <el-table-column
-                width='250'
-                prop="money"
-                label="邮箱">
-                </el-table-column>
-                <el-table-column
-                prop="school"
+                prop="adminSchool"
                 width='250'
                 label="学校">
                 </el-table-column>
@@ -30,6 +26,7 @@
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
+                     @click="deleteThis(scope.row)"
                         type="info">删除
                     </el-button>
                 </template>
@@ -39,39 +36,45 @@
     </div>
 </template>
 <script>
+import {getAdmin,getSchoolList,deleteAdmin} from '../API/API'
 export default {
     data(){
         return{
-            tableData: [{
-            weChat:'张三',
-            phone:'13233333333',
-            money:'2223.1元',
-            time:'2018年12月12日14：30',
-            school:'西安电子科技大学',
-            state:'已处理'
-            }, {
-            weChat:'张三',
-            phone:'13233333333',
-            money:'23.1元',
-            time:'2018年12月12日14：30',
-            school:'西安电子科技大学',
-            state:'已处理'
-            }, {
-            weChat:'张三',
-            phone:'13233333333',
-            money:'23.1元',
-            time:'2018年12月12日14：30',
-            school:'西安电子科技大学',
-            state:'已处理'
-            }, {
-            weChat:'张三',
-            phone:'13233333333',
-            money:'23.1元',
-            time:'2018年12月12日14：30',
-            school:'西安电子科技大学',
-            state:'已处理'
-            }],
+            adminList:[],
+            schoolList:[]
         }
+    },
+    methods:{
+        deleteThis(row){
+            console.log(row)
+            deleteAdmin(this,row.adminId).then((res)=>{
+                getSchoolList(this).then((res)=>{
+                    this.schoolList = res.body.data
+                    return getAdmin(this)
+                })
+                .then((res)=>{
+                    res.body.data.forEach(element => {
+                        element.adminSchool = this.schoolList[element.adminSchoolId].schoolName
+                    });
+                    this.adminList = res.body.data
+                })
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
+    },
+    mounted(){
+        getSchoolList(this).then((res)=>{
+            this.schoolList = res.body.data
+            return getAdmin(this)
+        })
+        .then((res)=>{
+            res.body.data.forEach(element => {
+                element.adminSchool = this.schoolList[element.adminSchoolId].schoolName
+            });
+            this.adminList = res.body.data
+        })
     }
 }
 </script>

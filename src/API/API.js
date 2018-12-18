@@ -15,13 +15,22 @@ const fanNotHandled = (that)=>{
     return ajax(`https://bang.zhengsj.top/admin/withdrawDeposit/viewUnHandled`,that,'GET');
 }
 const handleFance = (that,id)=>{
-    return ajax(`/admin/withdrawDeposit/withDraw/${id}`,that,'GET');
+    return ajax(`https://bang.zhengsj.top/admin/withdrawDeposit/withDraw/${id}`,that,'GET');
 }
 const fanHandled = (that)=>{
     return ajax(`https://bang.zhengsj.top/admin/withdrawDeposit/viewHandled`,that,'GET');
 }
 const addSecond = (that,data)=>{
-    
+    return ajax()
+}
+const getAdmin = (that)=>{
+    return ajax(`https://bang.zhengsj.top/admin/list`,that,'GET');
+}
+const getSchoolList = (that)=>{
+    return ajax(`https://bang.zhengsj.top/admin/school`,that,'GET');
+}
+const deleteAdmin = (that,id)=>{
+    return ajax(`https://bang.zhengsj.top/admin/delete/${id}`,that,'GET');
 }
 export {
     test,
@@ -32,5 +41,7 @@ export {
     fanHandled,
     fanNotHandled,
     handleFance,
-
+    getAdmin,
+    getSchoolList,
+    deleteAdmin
 }
