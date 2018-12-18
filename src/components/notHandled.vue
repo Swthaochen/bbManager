@@ -2,14 +2,14 @@
     <div>
         <template>
             <el-table
-                :data="tableData"
+                :data="InfoNotHandle"
                 style="width: 100%">
                 <el-table-column
                 type="index">
                 </el-table-column>
                 <el-table-column
-                width='100'
-                prop="weChat"
+                width='200'
+                prop="userId"
                 label="微信">
                 </el-table-column>
                 <el-table-column
@@ -17,24 +17,25 @@
                 label="手机号码">
                 </el-table-column>
                 <el-table-column
-                width='100'
-                prop="money"
+                prop="balance"
                 label="金额">
                 </el-table-column>
                 <el-table-column
                 width='180'
-                prop="time"
+                prop="createTime"
                 label="时间">
                 </el-table-column>
                 <el-table-column
-                prop="school"
+                prop="schoolName"
                 width='180'
                 label="学校">
                 </el-table-column>
                 <el-table-column>
                 <template slot-scope="scope">
                     <el-button
-                        type="primary">设置为已处理
+                        type="primary"
+                        @click="handleThis(scope.row)"
+                        >设置为已处理
                     </el-button>
                 </template>
                 </el-table-column>
@@ -43,34 +44,40 @@
     </div>
 </template>
 <script>
+import {fanNotHandled,handleFance} from '../API/API'
 export default {
     data(){
         return{
-            tableData: [{
-            weChat:'张三',
-            phone:'13233333333',
-            money:'2223.1元',
-            time:'2018年12月12日14：30',
-            school:'西安电子科技大学'
-            }, {
-            weChat:'张三',
-            phone:'13233333333',
-            money:'23.1元',
-            time:'2018年12月12日14：30',
-            school:'西安电子科技大学'
-            }, {
-            weChat:'张三',
-            phone:'13233333333',
-            money:'23.1元',
-            time:'2018年12月12日14：30',
-            school:'西安电子科技大学'
-            }, {
-            weChat:'张三',
-            phone:'13233333333',
-            money:'23.1元',
-            time:'2018年12月12日14：30',
-            school:'西安电子科技大学'
-            }],
+            InfoNotHandle: [],
+        }
+    },
+    mounted(){
+        fanNotHandled(this).then((res)=>{
+            console.log(res.body.data)
+            res.body.data.forEach(element => {
+                let date = new Date(element.createTime);
+                var theDate = date.getFullYear() + '.' + date.getMonth() + '.' + date.getDate()
+                element.createTime = theDate
+            });
+            this.InfoNotHandle = res.body.data
+        })
+    },
+    methods:{
+        handleThis(row){
+            handleFance(this,row.userId).then((res)=>{
+                console.log(res)
+                fanNotHandled(this).then((res)=>{
+                    res.body.data.forEach(element => {
+                        let date = new Date(element.createTime);
+                        var theDate = date.getFullYear() + '.' + date.getMonth() + '.' + date.getDate()
+                        element.createTime = theDate
+                    });
+                    this.InfoNotHandle = res.body.data
+                })
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
         }
     }
 }

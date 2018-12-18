@@ -8,7 +8,7 @@
                 type="index">
                 </el-table-column>
                 <el-table-column
-                width='100'
+                width='200'
                 prop="weChat"
                 label="账号">
                 </el-table-column>
@@ -17,28 +17,14 @@
                 label="电话">
                 </el-table-column>
                 <el-table-column
-                width='100'
+                width='250'
                 prop="money"
                 label="邮箱">
                 </el-table-column>
                 <el-table-column
                 prop="school"
-                width='220'
+                width='250'
                 label="学校">
-                </el-table-column>
-                <el-table-column
-                width='150'
-                prop="state"
-                label="分成金额">
-                </el-table-column>
-                <el-table-column
-                width='100'>
-                <template slot-scope="scope">
-                    <el-button
-                    size="mini"
-                        type="primary">提交
-                    </el-button>
-                </template>
                 </el-table-column>
                 <el-table-column>
                 <template slot-scope="scope">

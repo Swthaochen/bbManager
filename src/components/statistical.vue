@@ -83,20 +83,20 @@ export default {
       let date1_value=`${date1.getFullYear()}${(date1.getMonth() + 1)}${date1.getDate()}`
       let date2 = new Date(this.date[1]) 
       let date2_value=`${date2.getFullYear()}${(date2.getMonth() + 1)}${date2.getDate()}`
-      this.$axios({
-        url: `https://bang.zhengsj.top/admin/statistics/viewUnPicked`,
+      this.$http({
+        url: `https://bang.zhengsj.top/admin/statistics/viewConcreteInfo/${date1_value}/${date2_value}`,
         methods: 'GET',
         headers: {
-          TOKEN: this.cookie
+          token: this.cookie
         },
         withCredentials: true
       }).then(res=>console.log(res))
     }
   },
-  mouted(){
+  mounted(){
     this.cookie = sessionStorage.getItem('cookie')
     this.cookie = this.cookie.split('=')[1]
-    setCookie('token',this.cookie)
+    console.log(this.cookie)
   }
 }
 </script>

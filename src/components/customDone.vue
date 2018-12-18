@@ -1,20 +1,20 @@
 <template>
   <div>
     <el-table
-        :data="tableData3"
+        :data="InfoHandle"
         stripe
         style="width: 100%">
         <el-table-column
-          prop="info"
+          prop="content"
           width="600"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="time"
+          prop="createTime"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="tel"
+          prop="phone"
           align="center">
         </el-table-column>
         <el-table-column
@@ -28,19 +28,25 @@
 </template>
 
 <script>
+import {getHanledInfo} from '../API/API'
 export default {
   data(){
     return{
-      tableData3: [
-        {
-          info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo com',
-          tel: 15991266003,
-          time: '2018.20.13'
-        }
+      InfoHandle: [
       ]
     }
   },
   components:{
+  },
+  mounted(){
+      getHanledInfo(this).then((res)=>{
+        res.body.data.forEach(element => {
+          let date = new Date(element.createTime);
+          var theDate = date.getFullYear() + '.' + date.getMonth() + '.' + date.getDate()
+          element.createTime = theDate
+        });
+        this.InfoHandle = res.body.data
+      })
   }
 }
 </script>
