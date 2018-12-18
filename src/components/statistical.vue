@@ -25,15 +25,15 @@
       </el-card>
       <el-card shadow="hover">
         <i class="el-icon-circle-plus"> 新增订单数量</i>
-        <div class="info">123</div>
+        <div class="info">{{newOrder}}</div>
       </el-card>
       <el-card shadow="hover">
         <i class="el-icon-success"> 已完成订单数量</i>
-        <div class="info">123</div>
+        <div class="info">{{completedOrder}}</div>
       </el-card>
       <el-card shadow="hover">
         <i class="el-icon-star-on"> 完成订单总金额</i>
-        <div class="info">123</div>
+        <div class="info">{{totalMoney}}</div>
       </el-card>
     </div>
   </div>
@@ -41,10 +41,14 @@
 
 <script>
 import {test} from '../API/API'
-function setCookie(key, value, iDay) {
-    var oDate = new Date();
-    oDate.setDate(oDate.getDate() + iDay);
-    document.cookie = key + '=' + value + ';expires=' + oDate;
+function getDetailDate(date) {
+  let year,month,day
+  year = date.getFullYear()
+  if (date.getMonth()+1 < 10) month = `0${date.getMonth()+1}`
+  else month = date.getMonth()+1
+  if (date.getDate() < 10) day = `0${date.getDate()+1}`
+  else day = date.getDate()
+  return `${year}${month}${day}`
 }
 export default {
   data() {
@@ -52,6 +56,10 @@ export default {
       date: '',
       school: '',
       cookie: '',
+      doingOrder: 0,
+      newOrder: 0,
+      completedOrder: 0,
+      totalMoney: 0,
       schools: [{
           value: '选项1',
           label: '西安电子科技大学'
@@ -80,9 +88,10 @@ export default {
     },
     search(){
       let date1 = new Date(this.date[0]) 
-      let date1_value=`${date1.getFullYear()}${(date1.getMonth() + 1)}${date1.getDate()}`
+      let date1_value= getDetailDate(date1)
       let date2 = new Date(this.date[1]) 
-      let date2_value=`${date2.getFullYear()}${(date2.getMonth() + 1)}${date2.getDate()}`
+      let date2_value= getDetailDate(date2)
+      console.log(date1_value);
       this.$http({
         url: `https://bang.zhengsj.top/admin/statistics/viewConcreteInfo/${date1_value}/${date2_value}`,
         methods: 'GET',
@@ -90,13 +99,19 @@ export default {
           token: this.cookie
         },
         withCredentials: true
-      }).then(res=>console.log(res))
+      }).then(res => {
+        let data = res.body.data
+        data.forEach(item => {
+          this.newOrder += item.newIndent
+          this.completedOrder += item.finishedIndent
+          this.totalMoney += item.income
+        })
+      })
     }
   },
   mounted(){
     this.cookie = sessionStorage.getItem('cookie')
     this.cookie = this.cookie.split('=')[1]
-    console.log(this.cookie)
   }
 }
 </script>
