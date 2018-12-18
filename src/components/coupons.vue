@@ -13,25 +13,25 @@
           align="center">
         </el-table-column>
         <el-table-column
-          prop="money"
+          prop="reducePrice"
           label="优惠额度"
           width="100"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="conditions"
+          prop="leastPrice"
           label="使用条件"
           width="200"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="startTime"
+          prop="validTime"
           label="生效时间"
           width="200"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="endTime"
+          prop="invalidTime"
           label="失效时间"
           width="200"
           align="center">
@@ -40,7 +40,7 @@
           label="操作"
           align="center">
           <template slot-scope="scope">
-            <el-button type="danger">撤销优惠券</el-button>
+            <el-button @click="deleteCoupon(scope.row)" type="danger">撤销优惠券</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,21 +50,34 @@
       <el-dialog title="添加优惠券" :visible.sync="dialogFormVisible">
         <el-form :model="form">
           <el-form-item label="优惠额度" :label-width="formLabelWidth">
-            <el-input placeholder="只输入优惠金额数字，如“3”" v-model.number="form.money" autocomplete="off"></el-input>
+            <el-input placeholder="只输入优惠金额数字，如“3”" v-model.number="form.reducePrice" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="优惠条件" :label-width="formLabelWidth">
-            <el-input placeholder="只输入满额金额数字，如“30”" v-model.number="form.conditions" autocomplete="off"></el-input>
+            <el-input placeholder="只输入满额金额数字，如“30”" v-model.number="form.leastPrice" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="生效时间" :label-width="formLabelWidth">
-            <el-date-picker type="date" placeholder="选择日期" v-model="form.startTime" style="width: 100%;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="form.validTime" style="width: 100%;"></el-date-picker>
           </el-form-item>
           <el-form-item label="失效时间" :label-width="formLabelWidth">
-            <el-date-picker type="date" placeholder="选择日期" v-model="form.endTime" style="width: 100%;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="form.invalidTime" style="width: 100%;"></el-date-picker>
           </el-form-item>
         </el-form>
+        <el-upload
+          action="https://bang.zhengsj.top/admin/coupon/addNew"
+          :headers="header"
+          :limit="1"
+          accept="image/png,image/gif,image/jpg,image/jpeg"
+          ref="upload"
+          name="picture"
+          :data="usefulData"
+          :file-list="fileList"
+          :auto-upload="false">
+          <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过30kb</div>
+        </el-upload>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="submitUpload">确 定</el-button>
         </div>
       </el-dialog>
   </div>
@@ -74,25 +87,78 @@
 export default {
   data(){
     return{
-      tableData3: [
-        {
-          money: 3,
-          conditions: '满30',
-          startTime: '2018-10-13',
-          endTime: '2018-12-31'
-        }
-      ],
+      tableData3: [],
+      cookie:'',
       dialogFormVisible: false,
-        form: {
-          money:'',
-          conditions:'',
-          startTime:'',
-          endTime:''
-        },
-        formLabelWidth: '120px'
+      form: {
+        reducePrice:'',
+        leastPrice:'',
+        validTime:'',
+        invalidTime:''
+      },
+      formLabelWidth: '120px',
+      header:{
+        token: ''
+      },
+      flieList: []
     }
   },
-  components:{
+  computed: {
+    usefulData:function(){
+      let obj = {}
+      obj.reducePrice = this.form.reducePrice
+      obj.leastPrice  = this.form.leastPrice
+      obj.validTime = new Date(this.form.validTime).valueOf()
+      obj.invalidTime = new Date(this.form.invalidTime).valueOf()
+      return obj
+    }
+  },
+  methods: {
+    getCoupons(){
+      this.$http({
+        url: `https://bang.zhengsj.top/admin/coupon/viewAll`,
+        methods: 'GET',
+        headers: {
+          token: this.cookie
+        },
+        withCredentials: true
+      }).then(res => {
+        console.log(res);
+        res.body.data.forEach(item => {
+          item.validTime = new Date(item.validTime).toLocaleString()
+          item.invalidTime = new Date(item.invalidTime).toLocaleString()
+        })
+        this.tableData3 = res.body.data
+      })
+    },
+    submitUpload(){
+      this.dialogFormVisible = false
+      this.$refs.upload.submit()
+      this.getCoupons()
+      this.$notify({
+          title: '成功',
+          message: '优惠券添加成功'
+        });
+    },
+    deleteCoupon(row){
+      this.$http({
+        url: `https://bang.zhengsj.top/admin/coupon/delete/${row.couponId}`,
+        methods: 'GET',
+        headers: {
+          token: this.cookie
+        },
+        withCredentials: true
+      }).then(res => {
+        this.getCoupons()
+      })
+    }
+  },
+  created(){
+    this.cookie = sessionStorage.getItem('cookie')
+    this.cookie = this.cookie.split('=')[1]
+    console.log(this.cookie);
+    this.header.token = this.cookie
+    this.getCoupons()
   }
 }
 </script>
