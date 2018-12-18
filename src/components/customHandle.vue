@@ -1,26 +1,26 @@
 <template>
   <div>
     <el-table
-        :data="tableData3"
+        :data="InfoNotHandle"
         stripe
         style="width: 100%">
         <el-table-column
-          prop="info"
+          prop="content"
           width="600"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="time"
+          prop="createTime"
           align="center">
         </el-table-column>
         <el-table-column
-          prop="tel"
+          prop="phone"
           align="center">
         </el-table-column>
         <el-table-column
           align="center">
           <template slot-scope="scope">
-            <el-button>设置为已处理</el-button>
+            <el-button @click="setHandle(scope.row)">设置为已处理</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -28,19 +28,42 @@
 </template>
 
 <script>
+import {getNotHandle,handleInfo} from '../API/API'
 export default {
   data(){
     return{
-      tableData3: [
-        {
-          info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo com',
-          tel: 15991266003,
-          time: '2018.20.13'
-        }
+      InfoNotHandle: [
       ]
     }
   },
+  methods:{
+    setHandle(row){
+      handleInfo(this,row.feedbackId).then((res)=>{
+        getNotHandle(this).then((res)=>{
+          res.body.data.forEach(element => {
+            let date = new Date(element.createTime);
+            var theDate = date.getFullYear() + '.' + date.getMonth() + '.' + date.getDate()
+            element.createTime = theDate
+          });
+          this.InfoNotHandle = res.body.data
+        })
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    }
+  },
   components:{
+  },
+  mounted(){
+      getNotHandle(this).then((res)=>{
+        res.body.data.forEach(element => {
+          let date = new Date(element.createTime);
+          var theDate = date.getFullYear() + '.' + date.getMonth() + '.' + date.getDate()
+          element.createTime = theDate
+        });
+        this.InfoNotHandle = res.body.data
+      })
   }
 }
 </script>

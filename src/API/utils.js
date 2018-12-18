@@ -1,15 +1,18 @@
-import qs from 'qs'
-var ajax = function(url,that,methods='GET',data=null){
+var ajax = function(url,that,method='GET',data={}){
     return new Promise((resolve,reject)=>{
-        var config = {
-          // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          method: methods
-        };
-        that.$axios.get(`/api${url}`,qs.stringify(data),config)
-        .then((response) => {
-            resolve(response)
-        })
-        .catch((err) => {
+        var mycookie = sessionStorage.getItem('cookie')
+        mycookie = mycookie.split('=')[1]
+        that.$http({
+            url: url,
+            methods: method,
+            headers: {
+              token: mycookie   
+            },
+            withCredentials: true,
+            body:data
+        }).then((res)=>{
+            resolve(res)
+        }).catch((err)=>{
             reject(err)
         })
     })
