@@ -26,6 +26,7 @@
                 <template slot-scope="scope">
                     <el-button
                     size="mini"
+                     @click="deleteThis(scope.row)"
                         type="info">删除
                     </el-button>
                 </template>
@@ -35,7 +36,7 @@
     </div>
 </template>
 <script>
-import {getAdmin,getSchoolList} from '../API/API'
+import {getAdmin,getSchoolList,deleteAdmin} from '../API/API'
 export default {
     data(){
         return{
@@ -44,21 +45,35 @@ export default {
         }
     },
     methods:{
-
+        deleteThis(row){
+            console.log(row)
+            deleteAdmin(this,row.adminId).then((res)=>{
+                getSchoolList(this).then((res)=>{
+                    this.schoolList = res.body.data
+                    return getAdmin(this)
+                })
+                .then((res)=>{
+                    res.body.data.forEach(element => {
+                        element.adminSchool = this.schoolList[element.adminSchoolId].schoolName
+                    });
+                    this.adminList = res.body.data
+                })
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
     },
     mounted(){
         getSchoolList(this).then((res)=>{
-            console.log(res)
             this.schoolList = res.body.data
             return getAdmin(this)
         })
         .then((res)=>{
-            console.log(res.body.data)
             res.body.data.forEach(element => {
                 element.adminSchool = this.schoolList[element.adminSchoolId].schoolName
             });
             this.adminList = res.body.data
-
         })
     }
 }
