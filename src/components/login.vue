@@ -9,9 +9,11 @@
 					<el-form-item>
 						<el-input v-model="username" placeholder="用户名"></el-input>
 					</el-form-item>
+					<br>
 					<el-form-item>
 						<el-input v-model="password" type="password" placeholder="密码"></el-input>
 					</el-form-item>
+					<br>
 					<el-form-item>
 				    	<el-button @click="go" type="primary" class="submit_btn">登陆</el-button>
 				  	</el-form-item>
