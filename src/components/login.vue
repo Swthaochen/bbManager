@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import {messageBox,notification,ConfigBox} from '../API/Toast'
 	export default {
 	    data(){
 			return {
@@ -42,6 +43,13 @@
 					if(res.status == 200) {
 						this.$router.push('/statistical')
 					}
+				})
+				.catch((err)=>{
+					if(typeof(err) != String)
+						err = '登陆失败'
+					else
+						err = err || "发生了错误，可能是网络异常，请稍后重试"
+					this.$message.error(err);
 				})
             }
         }
