@@ -18,7 +18,7 @@
       </el-select>
       <el-button @click="search">查询结果</el-button>
     </div>
-    <div class="cards" @click="test">
+    <div class="cards">
       <el-card shadow="hover">
         <i class="el-icon-info"> 待配送订单</i>
         <div class="info">{{deleyOrders}}</div>
@@ -125,7 +125,7 @@ export default {
       this.beginTemp = new Date(this.date[0]).valueOf()
       this.endTemp = new Date(this.date[1]).valueOf()
       this.$http({
-        url: `https://bang.zhengsj.top/admin/statistics/viewConcreteInfo/${date1_value}/${date2_value}`,
+        url: `https://bang.zhengsj.top/admin/statistics/viewConcreteInfo/${this.schoolid}/${date1_value}/${date2_value}`,
         methods: 'GET',
         headers: {
           token: this.cookie
