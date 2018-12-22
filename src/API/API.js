@@ -21,7 +21,7 @@ const fanHandled = (that)=>{
     return ajax(`https://bang.zhengsj.top/admin/withdrawDeposit/viewHandled`,that,'GET');
 }
 const addSecond = (that,data)=>{
-    return ajax()
+    return ajax(`https://bang.zhengsj.top/admin/create`,that,'POST',data)
 }
 const getAdmin = (that)=>{
     return ajax(`https://bang.zhengsj.top/admin/list`,that,'GET');
@@ -43,5 +43,6 @@ export {
     handleFance,
     getAdmin,
     getSchoolList,
-    deleteAdmin
+    deleteAdmin,
+    addSecond
 }

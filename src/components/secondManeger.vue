@@ -10,7 +10,7 @@
                 </el-table-column>
                 <el-table-column
                 width='250'
-                prop="adminId"
+                prop="adminName"
                 label="账号">
                 </el-table-column>
                 <el-table-column
@@ -37,6 +37,7 @@
 </template>
 <script>
 import {getAdmin,getSchoolList,deleteAdmin} from '../API/API'
+import Bus from '../API/Bus'
 export default {
     data(){
         return{
@@ -65,6 +66,18 @@ export default {
         }
     },
     mounted(){
+        Bus.$on('fresh', content => { 
+                getSchoolList(this).then((res)=>{
+                this.schoolList = res.body.data
+                return getAdmin(this)
+            })
+            .then((res)=>{
+                res.body.data.forEach(element => {
+                    element.adminSchool = this.schoolList[element.adminSchoolId].schoolName
+                });
+                this.adminList = res.body.data
+            })
+        }); 
         getSchoolList(this).then((res)=>{
             this.schoolList = res.body.data
             return getAdmin(this)

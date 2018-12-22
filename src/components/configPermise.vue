@@ -15,31 +15,31 @@
         :model="form"
         >
         <el-form-item label="账号">
-              <el-input v-model="form.clu_no"></el-input>
+              <el-input v-model="form.adminName"></el-input>
           </el-form-item>
           <el-form-item label="电话">
-              <el-input v-model="form.clu_name"></el-input>
+              <el-input v-model="form.adminPhone"></el-input>
           </el-form-item>
           <el-form-item label="密码">
-              <el-input v-model="form.clu_loc"></el-input>
+              <el-input type="password" v-model="form.adminPass"></el-input>
           </el-form-item>
           <el-form-item label="确认密码">
-              <el-input v-model="form.clu_year"></el-input>
+              <el-input type="password" v-model="passConfig"></el-input>
           </el-form-item>
           <el-form-item label="学校"> 
-            <el-select v-model="aa" placeholder="请选择">
+            <el-select v-model="adminSchoolId" placeholder="请选择" @change="chooseSchool(adminSchoolId)">
                 <el-option
                 v-for="item in schoolList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                :key="item.id"
+                :label="item.value"
+                :value="item.id">
                 </el-option>
             </el-select>
           </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
     </div>
     </el-dialog>
     <router-view></router-view>
@@ -47,16 +47,20 @@
 </template>
 <script>
 import headertop from '@/components/headerTop';
+import {addSecond} from '../API/API'
+import Bus from '../API/Bus'
 export default {
     data(){
         return{
             dialogFormVisible:false,
             dialogFormVisible2:false,
             activeIndex:'configPermise',
-            form:[
-                
-            ],
-            aa:'',
+            adminSchoolId:'',
+            form:{
+                adminName:'',
+                adminPhone:'',
+                adminPass:''
+            },
             schoolList:[
                 {
                     value:'西安电子科技大学',
@@ -70,7 +74,8 @@ export default {
                     value:'西安外国语大学',
                     id:3
                 }
-            ]
+            ],
+            passConfig:''
         }
     },
     components:{
@@ -81,7 +86,30 @@ export default {
             if(this.$route.path == '/configPermise')
                 this.dialogFormVisible = true;
             console.log(this.$route.path);
+        },
+        chooseSchool(id){
+            this.adminSchoolId = id
+        },
+        submitForm(){
+            var data = {
+                adminName:this.form.adminName,
+                adminPhone:this.form.adminPhone,
+                adminPass:this.form.adminPass,
+                adminSchoolId:this.adminSchoolId,
+                adminRole:'ROLE_ADMIN_2' 
+            }
+            addSecond(this,data).then((res)=>{
+                console.log(res)
+                Bus.$emit('fresh', 120)
+            })
+            this.dialogFormVisible = false
+
         }
+    },
+    mounted(){
+        getSchoolList(this).then((res)=>{
+            this.schoolList = res.body.data
+        })
     }
 
 }
