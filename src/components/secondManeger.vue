@@ -51,11 +51,15 @@ export default {
             deleteAdmin(this,row.adminId).then((res)=>{
                 getSchoolList(this).then((res)=>{
                     this.schoolList = res.body.data
+                    console.log(this.schoolList)
                     return getAdmin(this)
                 })
                 .then((res)=>{
                     res.body.data.forEach(element => {
-                        element.adminSchool = this.schoolList[element.adminSchoolId].schoolName
+                        this.schoolList.forEach(element2 =>{
+                            if(element2.id == element.adminSchoolId)
+                                element.adminSchool = element2.schoolName
+                        })
                     });
                     this.adminList = res.body.data
                 })
@@ -73,7 +77,10 @@ export default {
             })
             .then((res)=>{
                 res.body.data.forEach(element => {
-                    element.adminSchool = this.schoolList[element.adminSchoolId].schoolName
+                    this.schoolList.forEach(element2 =>{
+                        if(element2.id == element.adminSchoolId)
+                            element.adminSchool = element2.schoolName
+                    })
                 });
                 this.adminList = res.body.data
             })
@@ -84,7 +91,10 @@ export default {
         })
         .then((res)=>{
             res.body.data.forEach(element => {
-                element.adminSchool = this.schoolList[element.adminSchoolId].schoolName
+                this.schoolList.forEach(element2 =>{
+                    if(element2.id == element.adminSchoolId)
+                        element.adminSchool = element2.schoolName
+                })
             });
             this.adminList = res.body.data
         })

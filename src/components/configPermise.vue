@@ -9,7 +9,7 @@
             >添加
         </el-button>
     </el-menu>
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
+    <el-dialog title="添加管理员" :visible.sync="dialogFormVisible">
     <el-form 
         label-width="70px"
         :model="form"
@@ -31,7 +31,7 @@
                 <el-option
                 v-for="item in schoolList"
                 :key="item.id"
-                :label="item.value"
+                :label="item.schoolName"
                 :value="item.id">
                 </el-option>
             </el-select>
@@ -47,7 +47,8 @@
 </template>
 <script>
 import headertop from '@/components/headerTop';
-import {addSecond} from '../API/API'
+import {addSecond,getSchoolList} from '../API/API'
+import {messageBox,notification,ConfigBox} from '../API/Toast'
 import Bus from '../API/Bus'
 export default {
     data(){
@@ -62,18 +63,6 @@ export default {
                 adminPass:''
             },
             schoolList:[
-                {
-                    value:'西安电子科技大学',
-                    id:1
-                },
-                {
-                    value:'西安邮电大学',
-                    id:2
-                },
-                {
-                    value:'西安外国语大学',
-                    id:3
-                }
             ],
             passConfig:''
         }
@@ -89,8 +78,13 @@ export default {
         },
         chooseSchool(id){
             this.adminSchoolId = id
+            console.log(this.adminSchoolId)
         },
         submitForm(){
+            if(this.form.adminPass != this.passConfig){
+                notification(this,'两次密码不一致')
+                return;
+            }
             var data = {
                 adminName:this.form.adminName,
                 adminPhone:this.form.adminPhone,
@@ -103,7 +97,6 @@ export default {
                 Bus.$emit('fresh', 120)
             })
             this.dialogFormVisible = false
-
         }
     },
     mounted(){
