@@ -39,7 +39,14 @@ import {messageBox,notification,ConfigBox} from '../API/Toast'
 					adminName: this.username,
 					password: this.password
 				}).then(res => {
-					sessionStorage.setItem('cookie',res.data.data)
+					console.log(res);
+					sessionStorage.removeItem('cookie')
+					sessionStorage.setItem('cookie',res.data.data.token)
+					let bool = res.data.data.admin.adminRole == "ROLE_ADMIN_1"
+					sessionStorage.setItem('isBoos',bool)
+					if(!bool){
+						sessionStorage.setItem('schoolId',res.data.data.admin.adminSchoolId)
+					}
 					if(res.status == 200) {
 						this.$router.push('/statistical')
 					}

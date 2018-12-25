@@ -16,19 +16,19 @@
             <i class="el-icon-warning"></i>
             <span slot="title">应急中心</span>
         </el-menu-item>
-        <el-menu-item index="coupons">
+        <el-menu-item :disabled="bool" index="coupons">
             <i class="el-icon-document"></i>
             <span slot="title">优惠券</span>
         </el-menu-item>
-        <el-menu-item index="customServer">
+        <el-menu-item :disabled="bool" index="customServer">
             <i class="el-icon-service"></i>
             <span slot="title">客服中心</span>
         </el-menu-item>
-        <el-menu-item index="finance">
+        <el-menu-item :disabled="bool" index="finance">
             <i class="el-icon-sold-out"></i>
             <span slot="title">财务中心</span>
         </el-menu-item>
-        <el-menu-item index="configPermise">
+        <el-menu-item :disabled="bool" index="configPermise">
             <i class="el-icon-setting"></i>
             <span slot="title">权限配置</span>
         </el-menu-item>
@@ -46,12 +46,17 @@ import headerTop from "@/components/headerTop";
 export default {
   data(){
       return{
-        index:'statistical'
+        index:'statistical',
+        bool:''
       }
   },
   name: 'index',
   components: {
       headerTop
+  },
+  created () {
+      this.bool = !(sessionStorage.getItem('isBoos') == "true")
+      console.log(this.bool);
   },
   mounted () {
     let arr = window.location.href.toString().split('/')

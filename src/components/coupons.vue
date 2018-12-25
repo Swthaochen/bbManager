@@ -52,12 +52,15 @@
           <el-form-item label="优惠额度" :label-width="formLabelWidth">
             <el-input placeholder="只输入优惠金额数字，如“3”" v-model.number="form.reducePrice" autocomplete="off"></el-input>
           </el-form-item>
+          <br>
           <el-form-item label="优惠条件" :label-width="formLabelWidth">
             <el-input placeholder="只输入满额金额数字，如“30”" v-model.number="form.leastPrice" autocomplete="off"></el-input>
           </el-form-item>
+          <br>
           <el-form-item label="生效时间" :label-width="formLabelWidth">
             <el-date-picker type="date" placeholder="选择日期" v-model="form.validTime" style="width: 100%;"></el-date-picker>
           </el-form-item>
+          <br>
           <el-form-item label="失效时间" :label-width="formLabelWidth">
             <el-date-picker type="date" placeholder="选择日期" v-model="form.invalidTime" style="width: 100%;"></el-date-picker>
           </el-form-item>
@@ -73,7 +76,7 @@
           :file-list="fileList"
           :auto-upload="false">
           <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过30kb</div>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过1m,长宽比为5：2</div>
         </el-upload>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>

@@ -8,7 +8,7 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期">
       </el-date-picker>
-      <el-select @change="selectSchool" v-model="school" placeholder="按学校选择">
+      <el-select v-if="bool" @change="selectSchool" v-model="school" placeholder="按学校选择">
         <el-option
           v-for="item in schools"
           :key="item.value"
@@ -16,6 +16,9 @@
           :value="item.value">
         </el-option>
       </el-select>
+      <div v-else>
+        {{school2}}
+      </div>
       <el-button @click="search">查询结果</el-button>
     </div>
     <div class="cards">
@@ -58,11 +61,13 @@ export default {
       schoolid: '',
       cookie: '',
       newOrder: 0,
+      school2:'',
       completedOrder: 0,
       totalMoney: 0,
       beginTemp: '',
       endTemp:'',
       deleyOrders: 0,
+      bool:'',
       schools: [{
           value: '1',
           label: '西安邮电大学'
@@ -172,6 +177,15 @@ export default {
         })
       })
     }
+  },
+  created(){
+    if(sessionStorage.getItem('schoolId')){
+      this.schoolid = sessionStorage.getItem('schoolId')
+    }
+    this.bool = (sessionStorage.getItem('isBoos') == "true")
+    console.log(this.schoolid);
+    let num = this.schoolid - 1
+    this.school2 = this.schools[num].label
   },
   mounted(){
     this.cookie = sessionStorage.getItem('cookie')
