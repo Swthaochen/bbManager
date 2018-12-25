@@ -152,7 +152,6 @@ export default {
   },
   created(){
     this.cookie = sessionStorage.getItem('cookie')
-    this.cookie = this.cookie.split('=')[1]
     this.getEmergy()
   }
 }

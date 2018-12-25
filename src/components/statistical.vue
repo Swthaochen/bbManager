@@ -189,7 +189,6 @@ export default {
   },
   mounted(){
     this.cookie = sessionStorage.getItem('cookie')
-    this.cookie = this.cookie.split('=')[1]
   }
 }
 </script>

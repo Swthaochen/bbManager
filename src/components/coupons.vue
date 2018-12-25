@@ -158,8 +158,6 @@ export default {
   },
   created(){
     this.cookie = sessionStorage.getItem('cookie')
-    this.cookie = this.cookie.split('=')[1]
-    console.log(this.cookie);
     this.header.token = this.cookie
     this.getCoupons()
   }
