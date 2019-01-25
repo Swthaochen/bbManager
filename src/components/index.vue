@@ -33,7 +33,7 @@
             <span slot="title">权限配置</span>
         </el-menu-item>
         <el-menu-item :disabled="bool" index="configNums">
-            <i class="el-icon-setting"></i>
+            <i class="el-icon-d-caret"></i>
             <span slot="title">参数设置</span>
         </el-menu-item>
         
