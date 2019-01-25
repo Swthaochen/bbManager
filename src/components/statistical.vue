@@ -44,6 +44,7 @@
 
 <script>
 import {test} from '../API/API'
+import {getSchoolList} from '../API/API'
 function getDetailDate(date) {
   let year,month,day
   year = date.getFullYear()
@@ -68,43 +69,7 @@ export default {
       endTemp:'',
       deleyOrders: 0,
       bool:'',
-      schools: [{
-          value: '1',
-          label: '西安邮电大学'
-        }, {
-          value: '2',
-          label: '陕西国际商贸学院'
-        }, {
-          value: '3',
-          label: '陕西科技大学镐京学院'
-        }, {
-          value: '4',
-          label: '欧亚学院'
-        }, {
-          value: '5',
-          label: '西京学院'
-        },{
-          value: '6',
-          label: '西北大学'
-        }, {
-          value: '7',
-          label: '西安工业大学'
-        }, {
-          value: '8',
-          label: '咸阳财经学院'
-        }, {
-          value: '9',
-          label: '西安电子科技大学'
-        }, {
-          value: '10',
-          label: '西安体育学院'
-        },{
-          value: '11',
-          label: '西安美术学院'
-        }, {
-          value: '12',
-          label: '西安科技大学'
-        }]
+      schools: []
     }
   },
   components:{
@@ -189,6 +154,16 @@ export default {
   },
   mounted(){
     this.cookie = sessionStorage.getItem('cookie')
+    getSchoolList(this).then((res)=>{
+      console.log(res.body.data)
+      res.body.data.forEach((item)=>{
+        let obj = {
+          value:item.id,
+          label:item.schoolName
+        }
+        this.schools.push(obj)
+      })
+    })
   }
 }
 </script>
