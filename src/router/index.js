@@ -14,7 +14,7 @@ import localManeger from '@/components/localManeger'
 import customServer from '@/components/customServer'
 import customHandle from '@/components/customHandle'
 import customDone from '@/components/customDone'
-
+import configNums from '@/components/configNums'
 Vue.use(Router)
 
 export default new Router({
@@ -50,6 +50,11 @@ export default new Router({
           path: '/statistical',
           name: 'statistical',
           component: statistical
+        },
+        {
+          path: '/configNums',
+          name: 'configNums',
+          component: configNums
         },
         {
           path: '/emergency',

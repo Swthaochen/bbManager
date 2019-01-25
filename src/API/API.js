@@ -32,6 +32,15 @@ const getSchoolList = (that)=>{
 const deleteAdmin = (that,id)=>{
     return ajax(`https://bang.zhengsj.top/admin/delete/${id}`,that,'GET');
 }
+const getConfigNums = (that)=>{
+    return ajax('https://bang.zhengsj.top/admin/config',that,'GET')
+}
+const setConfigNums = (that,data)=>{
+    return ajax('https://bang.zhengsj.top/admin/config/update',that,'POST',data)
+}
+const setConfigSchool = (that,data)=>{
+    return ajax('https://bang.zhengsj.top/admin/school',that,'POST',data)
+}
 export {
     test,
     getInfo,
@@ -44,5 +53,8 @@ export {
     getAdmin,
     getSchoolList,
     deleteAdmin,
-    addSecond
+    addSecond,
+    getConfigNums,
+    setConfigNums,
+    setConfigSchool
 }

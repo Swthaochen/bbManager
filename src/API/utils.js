@@ -1,8 +1,6 @@
 var ajax = function(url,that,method,data={}){
     return new Promise((resolve,reject)=>{  
         var mycookie = sessionStorage.getItem('cookie')
-        mycookie = mycookie.split('=')[1]
-        console.log(method)
         if(method == 'POST')
         {
             that.$http.post(url,data,{

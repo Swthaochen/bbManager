@@ -32,6 +32,11 @@
             <i class="el-icon-setting"></i>
             <span slot="title">权限配置</span>
         </el-menu-item>
+        <el-menu-item :disabled="bool" index="configNums">
+            <i class="el-icon-setting"></i>
+            <span slot="title">参数设置</span>
+        </el-menu-item>
+        
         </el-menu>
     </el-col>
     <el-col :span="20">
